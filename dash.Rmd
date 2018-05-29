@@ -80,7 +80,7 @@ renderUI({
             label = 'Second Target Record',
             choices = titles,
             width = '100%')
-    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.</div>\n<div>This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions.</div>"))
+    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.</div>\n<div>This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions. The models are two deep neural networks trained to detect computational style in social science papers. The first uses the full dataset while the second uses only records from a single subject. The models generally agree, but do have afew differences of opipion.</div>"))
   }
 })
 
@@ -109,7 +109,7 @@ renderUI({
   s = paste('<div><h3>', row()[['title']], '</h3></div>', sep = '')
   s = paste(s, '<div> Is ', row()[['is_comp']],' and the models predict it:</div>')
   s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos']] * 100) , '%</div>', sep = '')
-  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos_partial']] * 100) , '%</div>', sep = '')
+  s = paste(s, '<div><b>', 'Subject Model Prediction: ','</b><i>', row()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos_partial']] * 100) , '%</div>', sep = '')
   HTML(s)
 })
 
@@ -193,7 +193,7 @@ renderUI({
   s = paste('<div><h3>', row2()[['title']], '</h3></div>', sep = '')
   s = paste(s, '<div> Is ', row2()[['is_comp']],' and the models predict it:</div>')
   s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row2()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row2()[['probPos']] * 100) , '%</div>', sep = '')
-  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row2()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row2()[['probPos_partial']] * 100) , '%</div>', sep = '')
+  s = paste(s, '<div><b>', 'Subject Model Prediction: ','</b><i>', row2()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row2()[['probPos_partial']] * 100) , '%</div>', sep = '')
   HTML(s)
 })
 
