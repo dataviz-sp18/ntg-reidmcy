@@ -80,7 +80,7 @@ renderUI({
             label = 'Second Target Record',
             choices = titles,
             width = '100%')
-    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.<br> <br> This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions. The models are two deep neural networks trained to detect computational style in social science papers. The first uses the full dataset while the second uses only records from a single subject. The models generally agree, but do have afew differences of opipion.</div>"))
+    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.<br> <br> This app is a viewer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions. The models are two deep neural networks trained to detect computational style in social science papers. The first uses the full dataset while the second uses only records from a single subject. The models generally agree, but do have a few differences of opionin.<br> The goal of the app is to let people explore and compare the records, and is going to be the starting point for a deeper analysis of the models. The flexbox engine means that space is limited so while I considered reducing font sizes and putting everyiting together, I decide, asfter testing, the resutls would be too ugly and unreable on small displays. The first tab of the viewers give the title, base classification and model predictions. This is given first as it will be the most important information when comapring records. The second tab is the abstract, as a human would see it, the abstact and title are the only things the models see so the abstarc is the seconf most important piece of information. The metadata and subjects fields give addititaionl infomation about the record, helping the reader understand the record's placee. The last tab is the parts of speech tagged abstact. </div>"))
   }
 })
 
@@ -156,11 +156,25 @@ renderTable({
 })
 ```
 
+### POS Title
 
-### POS
 ``` {r}
 renderTable({
-  unipostag_types <- c("ADJ" = "adjective", "ADP" = "adposition", "ADV" = "adverb", "AUX" = "auxiliary", "CONJ" = "coordinating conjunction", "DET" = "determiner", "INTJ" = "interjection", "NOUN" = "noun", "NUM" = "numeral", "PART" = "particle", "PRON" = "pronoun", "PROPN" = "proper noun", "PUNCT" = "punctuation", "SCONJ" = "subordinating conjunction", "SYM" = "symbol", "VERB" = "verb", "X" = "other")
+  a <- row()[['title']]
+  sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
+  unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
+  unipostags <- rdr_pos(unipostagger, sentences)
+  #unipostags$word.type <- unipostag_types[unipostags$word.type]
+  unipostags[c('token_id', 'token', 'pos')]
+
+}, options = list(autoWidth = TRUE, scrollX = TRUE, scrollY = TRUE))
+```
+
+
+### POS Abstract
+
+``` {r}
+renderTable({
   a <- row()[['abstract']]
   sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
   unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
@@ -240,11 +254,24 @@ renderTable({
 })
 ```
 
+### POS Title
 
-### POS
 ``` {r}
 renderTable({
-  unipostag_types <- c("ADJ" = "adjective", "ADP" = "adposition", "ADV" = "adverb", "AUX" = "auxiliary", "CONJ" = "coordinating conjunction", "DET" = "determiner", "INTJ" = "interjection", "NOUN" = "noun", "NUM" = "numeral", "PART" = "particle", "PRON" = "pronoun", "PROPN" = "proper noun", "PUNCT" = "punctuation", "SCONJ" = "subordinating conjunction", "SYM" = "symbol", "VERB" = "verb", "X" = "other")
+  a <- row2()[['title']]
+  sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
+  unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
+  unipostags <- rdr_pos(unipostagger, sentences)
+  #unipostags$word.type <- unipostag_types[unipostags$word.type]
+  unipostags[c('token_id', 'token', 'pos')]
+
+}, options = list(autoWidth = TRUE, scrollX = TRUE, scrollY = TRUE))
+```
+
+### POS Abstract
+
+``` {r}
+renderTable({
   a <- row2()[['abstract']]
   sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
   unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
