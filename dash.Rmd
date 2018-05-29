@@ -164,9 +164,9 @@ renderTable({
   unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
   unipostags <- rdr_pos(unipostagger, sentences)
   #unipostags$word.type <- unipostag_types[unipostags$word.type]
-  unipostags
+  unipostags[c('token_id', 'token', 'pos')]
 
-})
+}, options = list(autoWidth = TRUE, scrollX = TRUE))
 ```
 
 Row {.tabset}
