@@ -166,7 +166,7 @@ renderTable({
   #unipostags$word.type <- unipostag_types[unipostags$word.type]
   unipostags[c('token_id', 'token', 'pos')]
 
-}, options = list(autoWidth = TRUE, scrollX = TRUE))
+}, options = list(autoWidth = TRUE, scrollX = TRUE, scrollY = TRUE))
 ```
 
 Row {.tabset}
