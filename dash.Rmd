@@ -40,5 +40,5 @@ Column {.sidebar}
 
 ### Introduction
 
-Testing 2
+Testing
 
