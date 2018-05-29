@@ -29,13 +29,27 @@ library(shinyWidgets)
 if (dir.exists('data/')) {
   filesDir <- 'data/'
 } else {
-  filesDir <- '/home/reid/int-reidmcy/data/'
+  filesDir <- '/home/reid/ntg-reidmcy/data/'
 }
 
 
 ```
 
 Column {.sidebar}
+-----------------------------------------------------------------------
+
+### Introduction
+
+Testing
+
+Column 
+-----------------------------------------------------------------------
+
+### Introduction
+
+Testing
+
+Column
 -----------------------------------------------------------------------
 
 ### Introduction
