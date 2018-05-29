@@ -80,7 +80,7 @@ renderUI({
             label = 'Second Target Record',
             choices = titles,
             width = '100%')
-    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.</div>\n<div>This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions. The models are two deep neural networks trained to detect computational style in social science papers. The first uses the full dataset while the second uses only records from a single subject. The models generally agree, but do have afew differences of opipion.</div>"))
+    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.<br> <br> This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions. The models are two deep neural networks trained to detect computational style in social science papers. The first uses the full dataset while the second uses only records from a single subject. The models generally agree, but do have afew differences of opipion.</div>"))
   }
 })
 
