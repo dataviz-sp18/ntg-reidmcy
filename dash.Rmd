@@ -1,14 +1,16 @@
 ---
-title: "Word Embeddings Visual"
+title: "WOS Record Comparison"
 author: "Reid McIlroy-Young"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: columns
-    social: menu
+    orientation: rows
     source_code: embed
+    vertical_layout: scroll
+    
 runtime: shiny
 ---
-<style>                     
+
+<style>
 .navbar {
   background-color:maroon;
   border-color:black;
@@ -16,11 +18,14 @@ runtime: shiny
 .navbar-brand {
 color:white!important;
 }
-</style>   
+</style>
+
 ```{r global, include=FALSE}
 options(shiny.sanitize.errors = FALSE)
 library(ggplot2)
 library(plotly)
+library(kableExtra)
+library(knitr)
 library(plyr)
 library(xkcdcolors)
 library(flexdashboard)
@@ -32,27 +37,187 @@ if (dir.exists('data/')) {
   filesDir <- '/home/reid/ntg-reidmcy/data/'
 }
 
+subject_names <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
+names(subject_names) <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
 
 ```
 
-Column {.sidebar}
+Row
 -----------------------------------------------------------------------
 
 ### Introduction
 
-Testing
+```{r}
+pickerInput(inputId = 'subject',
+            label = 'Subject',
+            choices = subject_names,
+            selected ='Psychology')
 
-Column 
------------------------------------------------------------------------
+materialSwitch(inputId = "same", label = "Same Record", status = "primary", right = TRUE)
 
-### Introduction
 
-Testing
+df <- reactive({
+  read.csv(paste(filesDir, input$subject, '.csv', sep = ''))
+})
 
-Column
------------------------------------------------------------------------
+renderUI({
+  titles <- lapply(df()['title'], as.character)
+  if (input$same) {
+    selectInput(inputId = 'title',
+            label = 'Target Record',
+            choices = titles,
+            width = '100%')
+  } else {
+    s1 <- selectInput(inputId = 'titleS',
+            label = 'First Target Record',
+            choices = titles,
+            width = '100%')
+    s2 <- selectInput(inputId = 'titleF',
+            label = 'Second Target Record',
+            choices = titles,
+            width = '100%')
+    tagList(s1,s2, HTML("DSFDFSDDF\nDSDFSDSDFS\nDSFSDDFSDFS"))
+  }
+})
 
-### Introduction
+```
 
-Testing
+
+Row {.tabset}
+-------------------------------------
+
+### First Record
+
+``` {r}
+
+row <- reactive({
+  if (input$same) {
+    title <- input$title
+  } else {
+    title <- input$titleS
+  }
+  df()[which(df()$title == title),]
+})
+
+
+renderUI({
+  
+  s = paste('<div><h3>', row()[['title']], '</h3></div>', sep = '')
+  s = paste(s, '<div> Is ', row()[['is_comp']],' and the models predict it:</div>')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos']] * 100) , '%</div>', sep = '')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos_partial']] * 100) , '%</div>', sep = '')
+  HTML(s)
+})
+
+```
+
+### Abstract
+
+``` {r}
+renderUI({
+  
+  s = paste('<div>', row()[['abstract']], '</div>')
+  HTML(s)
+})
+```
+
+### Metadata
+
+``` {r}
+renderUI({
+  s = paste('<div> <b> Title: </b>', row()[['title']], '</div>')
+  s = paste(s,'<div> <b> Source: </b>', row()[['source']], '</div>')
+  s = paste(s, '<div> <b> DOI: </b>', row()[['doi']], '</div>')
+  s = paste(s, '<div> <b> WOS ID: </b>', row()[['wos_id']], '</div>')
+  s = paste(s, '<div> <b> Publication Type: </b>', row()[['pubtype']], '</div>')
+  s = paste(s, '<div> <b> Document Type: </b>', row()[['doctype']], '</div>')
+  s = paste(s, '<div> <b> Publication Year: </b>', row()[['pubyear']], '</div>')
+  s = paste(s, '<div> <b> Language: </b>', row()[['language']], '</div>')
+  HTML(s)
+})
+```
+
+### Subjects
+
+``` {r}
+renderTable({
+  row()[c('Economics.and.business', 
+          'Educational.sciences',
+          'Law',
+          'Media.and.communication',
+          'Other.social.sciences',
+          'Political.science',
+          'Psychology',
+          'Social.and.economic.geography')]
+})
+```
+
+Row {.tabset}
+-------------------------------------
+
+### Second Record
+
+``` {r}
+
+row <- reactive({
+  if (input$same) {
+    title <- input$title
+  } else {
+    title <- input$titleF
+  }
+  df()[which(df()$title == title),]
+})
+
+
+renderUI({
+  
+  s = paste('<div><h3>', row()[['title']], '</h3></div>', sep = '')
+  s = paste(s, '<div> Is ', row()[['is_comp']],' and the models predict it:</div>')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos']] * 100) , '%</div>', sep = '')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos_partial']] * 100) , '%</div>', sep = '')
+  HTML(s)
+})
+
+```
+
+### Abstract
+
+``` {r}
+renderUI({
+  
+  s = paste('<div>', row()[['abstract']], '</div>')
+  HTML(s)
+})
+```
+
+### Metadata
+
+``` {r}
+renderUI({
+  s = paste('<div> <b> Title: </b>', row()[['title']], '</div>')
+  s = paste(s,'<div> <b> Source: </b>', row()[['source']], '</div>')
+  s = paste(s, '<div> <b> DOI: </b>', row()[['doi']], '</div>')
+  s = paste(s, '<div> <b> WOS ID: </b>', row()[['wos_id']], '</div>')
+  s = paste(s, '<div> <b> Publication Type: </b>', row()[['pubtype']], '</div>')
+  s = paste(s, '<div> <b> Document Type: </b>', row()[['doctype']], '</div>')
+  s = paste(s, '<div> <b> Publication Year: </b>', row()[['pubyear']], '</div>')
+  s = paste(s, '<div> <b> Language: </b>', row()[['language']], '</div>')
+  HTML(s)
+})
+```
+
+### Subjects
+
+``` {r}
+renderTable({
+  row()[c('Economics.and.business', 
+          'Educational.sciences',
+          'Law',
+          'Media.and.communication',
+          'Other.social.sciences',
+          'Political.science',
+          'Psychology',
+          'Social.and.economic.geography')]
+})
+```
 
