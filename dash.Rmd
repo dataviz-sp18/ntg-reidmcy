@@ -163,7 +163,7 @@ renderTable({
   sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
   unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
   unipostags <- rdr_pos(unipostagger, sentences)
-  unipostags$word.type <- unipostag_types[unipostags$word.type]
+  #unipostags$word.type <- unipostag_types[unipostags$word.type]
   unipostags
 
 })
