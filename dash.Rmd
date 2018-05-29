@@ -30,6 +30,8 @@ library(plyr)
 library(xkcdcolors)
 library(flexdashboard)
 library(shinyWidgets)
+library(RDRPOSTagger)
+library(tokenizers)
 
 if (dir.exists('data/')) {
   filesDir <- 'data/'
@@ -45,7 +47,7 @@ names(subject_names) <- c('Psychology', 'Educational sciences', 'Sociology', 'Po
 Row
 -----------------------------------------------------------------------
 
-### Introduction
+### Record Selector
 
 ```{r}
 pickerInput(inputId = 'subject',
@@ -149,6 +151,23 @@ renderTable({
           'Political.science',
           'Psychology',
           'Social.and.economic.geography')]
+})
+```
+
+
+### POS
+``` {r}
+renderTable({
+  a <- row()[['abstract']]
+  sentences <- tokenize_sentences(a, simplify = TRUE)
+  unipostagger <- rdr_model(language = "UD_English", annotation = "UniversalPOS")
+  unipostags <- rdr_pos(unipostagger, sentences)
+  unipostags$word.type <- unipostag_types[unipostags$word.type]
+  unipostags
+
+
+
+
 })
 ```
 
