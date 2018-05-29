@@ -178,7 +178,7 @@ Row {.tabset}
 
 ``` {r}
 
-row <- reactive({
+row2 <- reactive({
   if (input$same) {
     title <- input$title
   } else {
@@ -190,10 +190,10 @@ row <- reactive({
 
 renderUI({
   
-  s = paste('<div><h3>', row()[['title']], '</h3></div>', sep = '')
-  s = paste(s, '<div> Is ', row()[['is_comp']],' and the models predict it:</div>')
-  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos']] * 100) , '%</div>', sep = '')
-  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row()[['probPos_partial']] * 100) , '%</div>', sep = '')
+  s = paste('<div><h3>', row2()[['title']], '</h3></div>', sep = '')
+  s = paste(s, '<div> Is ', row2()[['is_comp']],' and the models predict it:</div>')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row2()[['pred']], '</i> with probabily of being computational: ', sprintf('%.1f', row2()[['probPos']] * 100) , '%</div>', sep = '')
+  s = paste(s, '<div><b>', 'Full Model Prediction: ','</b><i>', row2()[['pred_part']], '</i> with probabily of being computational: ', sprintf('%.1f', row2()[['probPos_partial']] * 100) , '%</div>', sep = '')
   HTML(s)
 })
 
@@ -204,7 +204,7 @@ renderUI({
 ``` {r}
 renderUI({
   
-  s = paste('<div>', row()[['abstract']], '</div>')
+  s = paste('<div>', row2()[['abstract']], '</div>')
   HTML(s)
 })
 ```
@@ -213,14 +213,14 @@ renderUI({
 
 ``` {r}
 renderUI({
-  s = paste('<div> <b> Title: </b>', row()[['title']], '</div>')
-  s = paste(s,'<div> <b> Source: </b>', row()[['source']], '</div>')
-  s = paste(s, '<div> <b> DOI: </b>', row()[['doi']], '</div>')
-  s = paste(s, '<div> <b> WOS ID: </b>', row()[['wos_id']], '</div>')
-  s = paste(s, '<div> <b> Publication Type: </b>', row()[['pubtype']], '</div>')
-  s = paste(s, '<div> <b> Document Type: </b>', row()[['doctype']], '</div>')
-  s = paste(s, '<div> <b> Publication Year: </b>', row()[['pubyear']], '</div>')
-  s = paste(s, '<div> <b> Language: </b>', row()[['language']], '</div>')
+  s = paste('<div> <b> Title: </b>', row2()[['title']], '</div>')
+  s = paste(s,'<div> <b> Source: </b>', row2()[['source']], '</div>')
+  s = paste(s, '<div> <b> DOI: </b>', row2()[['doi']], '</div>')
+  s = paste(s, '<div> <b> WOS ID: </b>', row2()[['wos_id']], '</div>')
+  s = paste(s, '<div> <b> Publication Type: </b>', row2()[['pubtype']], '</div>')
+  s = paste(s, '<div> <b> Document Type: </b>', row2()[['doctype']], '</div>')
+  s = paste(s, '<div> <b> Publication Year: </b>', row2()[['pubyear']], '</div>')
+  s = paste(s, '<div> <b> Language: </b>', row2()[['language']], '</div>')
   HTML(s)
 })
 ```
@@ -229,7 +229,7 @@ renderUI({
 
 ``` {r}
 renderTable({
-  row()[c('Economics.and.business', 
+  row2()[c('Economics.and.business', 
           'Educational.sciences',
           'Law',
           'Media.and.communication',
@@ -245,7 +245,7 @@ renderTable({
 ``` {r}
 renderTable({
   unipostag_types <- c("ADJ" = "adjective", "ADP" = "adposition", "ADV" = "adverb", "AUX" = "auxiliary", "CONJ" = "coordinating conjunction", "DET" = "determiner", "INTJ" = "interjection", "NOUN" = "noun", "NUM" = "numeral", "PART" = "particle", "PRON" = "pronoun", "PROPN" = "proper noun", "PUNCT" = "punctuation", "SCONJ" = "subordinating conjunction", "SYM" = "symbol", "VERB" = "verb", "X" = "other")
-  a <- row()[['abstract']]
+  a <- row2()[['abstract']]
   sentences <- tokenize_sentences(as.character(a), simplify = TRUE)
   unipostagger <- rdr_model(language = "English", annotation = "UniversalPOS")
   unipostags <- rdr_pos(unipostagger, sentences)
