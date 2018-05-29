@@ -80,7 +80,7 @@ renderUI({
             label = 'Second Target Record',
             choices = titles,
             width = '100%')
-    tagList(HTML("First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record."), s1,s2)
+    tagList(s1,s2, HTML("<div>First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record.</div>\n<div>This app is a viwer for some of the records used in my thesis. It shows all the relavent information provided about two reords, along with the models predictions.</div>"))
   }
 })
 
