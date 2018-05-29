@@ -30,6 +30,8 @@ library(plyr)
 library(xkcdcolors)
 library(flexdashboard)
 library(shinyWidgets)
+
+#These are annoying to get working
 library("RDRPOSTagger")
 library("tokenizers")
 
@@ -55,7 +57,7 @@ pickerInput(inputId = 'subject',
             choices = subject_names,
             selected ='Psychology')
 
-materialSwitch(inputId = "same", label = "Same Record", status = "primary", right = TRUE)
+materialSwitch(inputId = "same", label = "Same Record across views", status = "primary", right = TRUE)
 
 
 df <- reactive({
@@ -78,7 +80,7 @@ renderUI({
             label = 'Second Target Record',
             choices = titles,
             width = '100%')
-    tagList(s1,s2, HTML("DSFDFSDDF\nDSDFSDSDFS\nDSFSDDFSDFS"))
+    tagList(HTML("First select one of the six subjects then choose if you want two views of the same record, or each view to show a seperate record."), s1,s2)
   }
 })
 
