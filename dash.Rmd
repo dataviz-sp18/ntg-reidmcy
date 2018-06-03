@@ -41,8 +41,7 @@ if (dir.exists('data/')) {
   filesDir <- '/home/reid/ntg-reidmcy/data/'
 }
 
-subject_names <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
-names(subject_names) <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
+
 
 ```
 
@@ -52,6 +51,8 @@ Row
 ### Record Selector
 
 ```{r}
+subject_names <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
+names(subject_names) <- c('Psychology', 'Educational sciences', 'Sociology', 'Political science', 'Other social sciences', 'Media and communication', 'Law', 'Economics and business')
 pickerInput(inputId = 'subject',
             label = 'Subject',
             choices = subject_names,
